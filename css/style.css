@@ -1,0 +1,115 @@
+*{
+    box-sizing: border-box;
+}
+html{
+    scroll-behavior: smooth;
+}
+body{
+    max-width: 1400px;
+    min-width: 390px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+.container{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 300px 500px;
+    grid-template-areas: 
+    "actionZone"
+    "infoZone";
+    border: 1px solid black;
+}
+.header,.footer{
+    display: none;
+}
+
+/* ACTION ZONE STYLES */
+.actionZone{
+    border: 1px solid black;
+    grid-area: actionZone;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.actionZone__container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.actionZone__title{
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    background-color: orangered;
+}
+.actionZone__ships,.infoZone__ships{
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(10,1fr);
+    grid-template-rows: repeat(10,1fr);
+}
+.barco1{
+    background-color: brown;
+    grid-column: 1/2;
+    grid-row: 6/10;
+}
+.barco2{
+    background-color: brown;
+    grid-column: 4/9;
+    grid-row: 3/4;
+}
+.barco3{
+    background-color: brown;
+    grid-column: 4/5;
+    grid-row: 6/8;
+}
+.barco4{
+    background-color: brown;
+    grid-column: 8/9;
+    grid-row: 5/8;
+}
+.actionZone__board,.infoZone__board{
+    height: 270px;
+    width: 270px;
+    background-image: url(../assets/images/board.jpg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    padding: 17px 10px 8px 18px;
+    opacity: 0.7;
+
+    /* display: grid;
+    grid-template-columns: 0.75fr repeat(10,1fr) 0.5fr;
+    grid-template-rows: 0.75fr repeat(10,1fr) 0.5fr; */
+}
+
+/* INFO ZONE STYLE */
+.infoZone{
+    grid-area: infoZone;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+.infoZone__board{
+    width: 360px;
+    height: 360px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px 12px 13px 24px;
+}
+.infoZone__ships{
+    /* border: 1px solid red;    */
+    
+}
+.infoZone_fleet{
+    grid-row: 5/6;
+    grid-column:1/2;
+}
