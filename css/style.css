@@ -56,8 +56,13 @@ body{
 }
 .barco1{
     background-color: brown;
-    grid-column: 1/2;
-    grid-row: 6/10;
+    grid-column: 5/10;
+    grid-row: 1/2;
+    border: 1px solid black;
+
+}
+.ship_image{
+    object-fit: contain;
 }
 .barco2{
     background-color: brown;
@@ -114,5 +119,25 @@ body{
     grid-column:1/2;
 }
 .shipOnIt{
+    background-color: green;
+}
+.cell{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.amunnition{
+    width: 50%;
+    height: 50%;
+    border-radius: 50%;
+    background-color: white;
+}
+.amunnition__red{
     background-color: red;
+}
+.amunnition__white{
+    background-color: white;
+}
+.ship{
+    object-fit: contain;
 }
