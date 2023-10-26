@@ -57,7 +57,8 @@ const loadCells = () => {
 //FUNCTION FOR CREATING SHIPS
 /////********************************************************* */
 /**
- * function to porcess a group of grid areas and covert into single grid area as string type
+ * function to porcess a group of grid areas and covert into single grid area as string type, then push this 
+ * proccessed elemnt an way element as array into imagesGridArea global array
  * 
  * @param {Array} elements 
  * @param {string} way 
@@ -77,20 +78,29 @@ const processGridAreas = (elements,way) => {
     //with this code get first number to become in a column reference in the new grid area
     substring = lastArea.slice(lastArea.indexOf('/ ') + 2)
     let lastColumn = parseInt(substring.slice(0,substring.indexOf(' ')))
-    if(way == 'right' || way =='left'){
+    if(way == 'Right' || way =='Left'){
         //return new grid area created in only a line for example 
         //all girdAreas from array element given --> grid-area : 3 / 4 / auto / auto  grid-area : 3 / 5 / auto / auto grid-area : 3 / 6 / auto / auto grid-area : 3 / 7 / auto / auto
         //string for result 3 / 4 / 3 / 7
-        console.log('esta es la gris area final '+(firstRow + ' / ' + firstColumn + ' / ' +firstRow + ' / ' + lastColumn ))
+        imagesGridAreas.push([way,firstRow + ' / ' + firstColumn + ' / ' +firstRow + ' / ' + (lastColumn + 1) ])
+        // console.log('esta es la gris area final '+(firstRow + ' / ' + firstColumn + ' / ' +firstRow + ' / ' + lastColumn ))
     }else{
          //return new grid area created in only a line for example 
          //all girdAreas from array element given --> grid-area : 3 / 4 / auto / auto  grid-area : 4 / 4 / auto / auto grid-area : 5 / 4 / auto / auto grid-area : 6 / 4 / auto / auto
          //string for result 3 / 4 / 6 / 4
-         console.log('esta es la gris area final '+(firstRow + ' / ' + firstColumn + ' / ' +lastRow + ' / ' + firstColumn ))
+         
+        imagesGridAreas.push([way, firstRow + ' / ' + firstColumn + ' / ' + (parseInt(lastRow) + 1) + ' / ' + firstColumn])
+        //  console.log('esta es la gris area final '+(firstRow + ' / ' + firstColumn + ' / ' +lastRow + ' / ' + firstColumn ))
     }
+    // console.log('estos son los elementos del array que vamos a usar para las imagenes de los barcos')
+    // imagesGridAreas.forEach(element => {
+    //     console.log('primer elemento '+element[0])
+    //     console.log('segundo elemento '+element[1])
+    // });
 }
 /**
- * function to check children from element which has grid area equals than cells array has, are not shipOnIt className,
+ * function to check children from element which has grid area equals than cells array has,it means them
+ * are not shipOnIt className,
  * which determinate thid group of cells are free to take for a ship position
  * 
  * @param {Array} cells 
@@ -116,7 +126,7 @@ const isShipOnTheWay =  (cells,element,way) => {
         for (const cellp of posiblesCells) {
             cellp.classList.add('shipOnIt')
             cellp.firstElementChild.classList.add('amunnition__red')
-            console.log('este es el primer hijo de la celda '+cellp.firstElementChild.className)
+            // console.log('este es el primer hijo de la celda '+cellp.firstElementChild.className)
         }
 
         imagesGridAreas.push(processGridAreas(posiblesCells,way))
@@ -140,28 +150,28 @@ const isShipOnIt = (point,way,length,element) => {
 //array to storage grid area style of group of cells the ship will be created will take
     let cellGroup = []
     switch (way) {
-        case 'right':   
+        case 'Right':   
         substring = point.slice(point.indexOf('/ ') + 2)
             num = parseInt(substring.slice(0,substring.indexOf(' ')))
             for (let i = 0; i < length; i++) {
                 cellGroup.push(point.slice(0,point.indexOf('/') + 2) + (num + i) + (substring.slice(substring.indexOf(' '))))
             }
             break;
-        case 'left': 
+        case 'Left': 
         substring = point.slice(point.indexOf('/ ') + 2)
             num = parseInt(substring.slice(0,substring.indexOf(' ')))
             for (let i = 0; i < length; i++) {
                 cellGroup.unshift(point.slice(0,point.indexOf('/') + 2) + (num - i) + (substring.slice(substring.indexOf(' '))))
             }
             break;
-        case 'up':  
+        case 'Up':  
         num = parseInt(point.slice(0,point.indexOf(' ')))
             for (let i = 0; i < length; i++) {
                 cellGroup.unshift(((num) - (i))+(point.slice(point.indexOf(' '))))
 
             }
             break;
-        case 'down': 
+        case 'Down': 
         num = parseInt(point.slice(0,point.indexOf(' ')))
             for (let i = 0; i < length; i++) {
                 cellGroup.push(((num) + (i))+(point.slice(point.indexOf(' '))))
@@ -185,21 +195,21 @@ const isOnLimits = (point,way,length) => {
     let num = ''
     let substring = ''
     switch (way) {
-        case 'right':
+        case 'Right':
             substring = point.slice(point.indexOf('/ ') + 2)
             num = parseInt(substring.slice(0,substring.indexOf(' ')))
             if((parseInt(num) + length) <= 10) return true
             break;
-        case 'left':
+        case 'Left':
             substring = point.slice(point.indexOf('/ ') + 2)
             num = parseInt(substring.slice(0,substring.indexOf(' ')))
             if((parseInt(num) - length) >= 0)return true
             break;
-        case 'up':
+        case 'Up':
         num = parseInt(point.slice(0,point.indexOf(' ')))
             if((parseInt(num) - length) >= 0)return true
             break;
-        case 'down':
+        case 'Down':
         num = parseInt(point.slice(0,point.indexOf(' ')))
             if((parseInt(num) + length) <= 10 ) return true
             break;
@@ -213,7 +223,7 @@ const isOnLimits = (point,way,length) => {
  * @returns string to determinated posible grid area style
  */
 const generateShipRandomPosition = (element) => {
-    const ways = ['up','down','right','left']
+    const ways = ['Up','Down','Right','Left']
     let point = ''
     let way = ''
     //REPEAT THIS ACTION UNTIL FIND A CELL POSITION WITAOUT THIS CLASS
@@ -224,9 +234,9 @@ const generateShipRandomPosition = (element) => {
                     (Math.floor(Math.random() * 10) + 1)+' / auto / auto'
             //CALLING FINCTION TO CHECK THIS POSITION IS OCCUPED  BY CELL
             //WITH SHIPONIT CLASS
-        }while(!isOnLimits(point,way,shipLength[0]))
+        }while(!isOnLimits(point,way,auxLength[0]))
 
-    }while(!isShipOnIt(point,way,shipLength[0],element))
+    }while(!isShipOnIt(point,way,auxLength[0],element))
 
     return point
 }
@@ -234,56 +244,72 @@ const generateShipRandomPosition = (element) => {
  * function to load five ships in each board 
  */
 const loadShips = () => {
-    while(shipLength.length != 0){
+    auxLength = [...shipLength]
+    while(auxLength.length != 0){
         generateShipRandomPosition(actionZone__ships)
-        shipLength.shift()
+        auxLength.shift()
     }
     //rechage values from lenght array
-    shipLength = [5,4,3,3,2]
-    while(shipLength.length != 0){
+    auxLength = [...shipLength]
+    while(auxLength.length != 0){
         generateShipRandomPosition(infoZone__ships)
-        shipLength.shift()
+        auxLength.shift()
     }
     
 }
-const createImage = () => {
-    const image = document.createElement('IMG')
-    image.classList.add('ship')
-    image.style.gridArea = imagesGridAreas[iterator]
-    iterator++
-    return image
-}
-const loadImages = (element) => {
+const loadImages = (element,auxArray) => {
+    console.log('valores para el primer array ')
     fragmentImages = document.createDocumentFragment()
     for (let i = 0; i < 5; i++) {
-        ship = createImage()
-        ship.src = './assets/images/newClassic/'+i+'cells.jpg'
+        //create an image element with classList ship
+        ship = createElement('IMG','ship')
+        //set src value iterate shipsLenght array and 
+        //first value from imagesGridArea array which is way images will take
+        ship.src = './assets/images/newClassic/ships/BattleshipInterfaceShipsCells'
+        +shipLength[i]+auxArray[i][0]+'.png'
+        //set gird area valur form iteration from auxArray[1] array
+        ship.style.gridArea = auxArray[i][1] 
+        console.log('grid area del barco'+ship.style.gridArea)
+        console.log('path del barco '+ship.getAttribute('src'))
+        console.log('direccion del barco '+imagesGridAreas[i][0])
         fragmentImages.appendChild(ship)
     }
     element.appendChild(fragmentImages)
     //HAY QUE DAR BIEN LAS RUTAS Y ECHAR UN VIASTAZO SI LA SITNTAZIS DE LOS GRIS AREAS ESTASN BIEN
 }
+const removeGrid = (board,arrayAreas) => {
+    let fragmentCells = document.createDocumentFragment()
+    // fragmentCells = board.children
+    console.log(' aqui son los hijos del arrya guardado')
+    Array.from(board.children).forEach(element => {
+        console.log('element '+element.tagName)
+        fragmentCells.appendChild(element)
 
-/**
- * functio to call other function to load cells and ships into two differents board to start the game
- */
-const loadGame = () => {
-    // LOAD ALL CELLS INTO DOM
-    loadCells()
-    // LOAD PROTOYPE SHIPS INTO DOM
-    loadShips()
-    // REOMVE AND STROAGE ALL ELEMENTS FROM EACH BOARD 
-    // const elelemtsInfo = infoZone__ships.children 
-    // infoZone__ships.innerHTML = ''
-    // const elementsAction = actionZone__ships.children
-    // actionZone__ships.innerHTML = ''
-    // FUNCTION TO LOAD SHIP IMAGES INTO BOARDS
-    // loadImages(actionZone__ships)
-    // loadImages(infoZone__ships)
+    });
+    board.innerHTML = ''
+    loadImages(board,arrayAreas)
+    board.appendChild(fragmentCells)
 }
-
-
-/////********************************************************* */
+    
+    /**
+     * functio to call other function to load cells and ships into two differents board to start the game
+    */
+   const loadGame = () => {
+       // LOAD ALL CELLS INTO DOM
+       loadCells()
+       // LOAD PROTOYPE SHIPS INTO DOM
+       loadShips()
+       // REOMVE AND STROAGE ALL ELEMENTS FROM EACH BOARD 
+       removeGrid(infoZone__ships,imagesGridAreas.slice(5))
+       removeGrid(actionZone__ships,imagesGridAreas.slice(0,5))
+       // // FUNCTION TO LOAD SHIP IMAGES INTO BOARDS
+       //load frig cell elements again into its parent
+    //    loadGrid(actionZone__ships,elementAction)
+    //    loadGrid(infoZone__ships,elementInfo)
+    }
+    
+    
+    /////********************************************************* */
 //FUNCTION FOR GAME LOGIC
 /////********************************************************* */
 /**

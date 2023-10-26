@@ -119,12 +119,13 @@ body{
     grid-column:1/2;
 }
 .shipOnIt{
-    background-color: green;
+    background-color: transparent;
 }
 .cell{
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 1px solid black;
 }
 .amunnition{
     width: 50%;
@@ -140,4 +141,9 @@ body{
 }
 .ship{
     object-fit: contain;
+    width: 100%;
+    height: 100%;
+    justify-self: center;
+    align-self: end;
+    /* place-self: start; */
 }
