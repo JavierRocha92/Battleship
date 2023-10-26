@@ -1,0 +1,121 @@
+
+.ballShootRed{
+    animation-name: shootEnemyRed;
+    animation-duration: 5s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+@keyframes shootEnemyRed {
+    0%{
+        /* background-color: black; */
+        transform: rotate(-7200deg);
+    }
+    50%{
+        top: -20px;
+        left: -50px;
+        /* background-color: black; */
+    }
+    53%{
+        left: -45px;
+        top: -30px;
+    }
+    57%{
+        left:-40px;
+        top: -35px;
+    }
+    60%{
+        left: -35px;
+        top: -38px;
+    }
+    63%{
+        top: -40px;
+        left: -25px;
+    }
+    67%{
+        top: -38px;
+        left: -15px;
+    }
+    70%{
+        top: -35px;
+        left: -10px;
+    }
+    73%{
+        top: -30px;
+        left: -8px;
+    }
+    77%{
+        top: -20px;
+        left: -5px;
+    }
+    85%{
+        top: 0px;
+        transform: rotate(0deg);
+        background-image: url(../assets/images/bullets/pokeballBullet.png);
+    }
+    100%{
+        top: 0px;
+        left: 0px;
+        background-image: url(../assets/images/bullets/superballBullet.png);
+        /* background-color: red; */
+    }
+}
+.ballShootWhite{
+    animation-name: shootEnemyWhite;
+    animation-duration: 5s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+@keyframes shootEnemyWhite {
+    0%{
+        /* background-color: black; */
+        transform: rotate(-7200deg);
+    }
+    50%{
+        top: -20px;
+        left: -50px;
+        /* background-color: black; */
+    }
+    53%{
+        left: -45px;
+        top: -30px;
+    }
+    57%{
+        left:-40px;
+        top: -35px;
+    }
+    60%{
+       left: -35px;
+       top: -38px;
+    }
+    63%{
+        top: -40px;
+        left: -25px;
+    }
+    67%{
+        top: -38px;
+        left: -15px;
+    }
+    70%{
+        top: -35px;
+        left: -10px;
+    }
+    73%{
+        top: -30px;
+        left: -8px;
+    }
+    77%{
+        top: -20px;
+        left: -5px;
+    }
+    85%{
+        top: 0px;
+        transform: rotate(0deg);
+        background-image: url(../assets/images/bullets/pokeballBullet.png);
+    }
+    100%{
+        top: 0px;
+        left: 0px;
+        background-image: url(../assets/images/bullets/whiteballBullet.png);
+        /* background-color: white; */
+    }
+}

@@ -1,6 +1,30 @@
 const infoZone__ships = document.getElementById('infoZone__ships')
 const actionZone__ships = document.getElementById('actionZone__ships')
 let iterator = 0
+const postionBall = [
+'a1','a2','a3','a4','a5','a6','a7','a8','a9','a10',
+'b1','b2','b3','b4','b5','b6','b7','b8','b9','b10',
+'c1','c2','c3','c4','c5','c6','c7','c8','c9','c10',
+'d1','d2','d3','d4','d5','d6','d7','d8','d9','d10',
+'e1','e2','e3','e4','e5','e6','e7','e8','e9','e10',
+'f1','f2','f3','f4','f5','f6','f7','f8','f9','f10',
+'g1','g2','g3','g4','g5','g6','g7','g8','g9','g10',
+'h1','h2','h3','h4','h5','h6','h7','h8','h9','h10',
+'i1','i2','i3','i4','i5','i6','i7','i8','i9','i10',
+'j1','j2','j3','j4','j5','j6','j7','j8','j9','j10',
+]
+// const postionPlayer = [
+// 'pa1','pa2','pa3','pa4','pa5','pa6','pa7','pa8','pa9','pa10',
+// 'pb1','pb2','pb3','pb4','pb5','pb6','pb7','pb8','pb9','pb10',
+// 'pc1','pc2','pc3','pc4','pc5','pc6','pc7','pc8','pc9','pc10',
+// 'pd1','pd2','pd3','pd4','pd5','pd6','pd7','pd8','pd9','pd10',
+// 'pe1','pe2','pe3','pe4','pe5','pe6','pe7','pe8','pe9','pe10',
+// 'ef1','ef2','ef3','ef4','ef5','ef6','ef7','ef8','ef9','ef10',
+// 'eg1','eg2','eg3','eg4','eg5','eg6','eg7','eg8','eg9','eg10',
+// 'eh1','eh2','eh3','eh4','eh5','eh6','eh7','eh8','eh9','eh10',
+// 'ei1','ei2','ei3','ei4','ei5','ei6','ei7','ei8','ei9','ei10',
+// 'ej1','ej2','ej3','ej4','ej5','ej6','ej7','ej8','ej9','ej10',
+// ]
 
 //GLOBAL VARIABLED
 
@@ -10,12 +34,15 @@ imagesGridAreas = []
 /////********************************************************* */
 //FUNCTION FOR CREATING DIV AS CELLS
 /////********************************************************* */
-const createElement = (tag,clas) => {
+const createElement = (tag,clas1,clas2 = false,iD = false) => {
     const element = document.createElement(tag)
-    element.classList.add(clas)
+    element.classList.add(clas1)
+    if(clas2)
+    element.classList.add(clas2)
+    if(iD)
+    element.id = iD
     return element
 }
-
 /**
  * function to create a div element named cell 
  * 
@@ -26,7 +53,7 @@ const createElement = (tag,clas) => {
 const createCell = (row,column) => {
     const cell = createElement('DIV','cell')
     cell.style.gridArea = row+'/'+column
-    cell.appendChild(createElement('DIV','amunnition'))
+    
     // if(row == 4 && column == 8){
     //     cell.classList.add('shipOnIt')
     // }
@@ -44,8 +71,14 @@ const loadCells = () => {
 
     for (let i = 1; i <= 10; i++) {
         for (let j = 1; j <= 10; j++) {
-            fragment1.appendChild(createCell(i,j))
-            fragment2.appendChild(createCell(i,j))
+            const cell1 = createCell(i,j)
+            cell1.classList.add('p'+postionBall[i])
+            cell1.appendChild(createElement('DIV','amunnition', 'ballEnemyOutside','p'+postionBall[i]))
+            fragment1.appendChild(cell1)
+            const cell2 = createCell(i,j)
+            cell2.classList.add('e'+postionBall[i])
+            cell2.appendChild(createElement('DIV','amunnition','e'+postionBall[i]))
+            fragment2.appendChild(cell2)
         }
     }
     infoZone__ships.appendChild(fragment1)
@@ -83,20 +116,13 @@ const processGridAreas = (elements,way) => {
         //all girdAreas from array element given --> grid-area : 3 / 4 / auto / auto  grid-area : 3 / 5 / auto / auto grid-area : 3 / 6 / auto / auto grid-area : 3 / 7 / auto / auto
         //string for result 3 / 4 / 3 / 7
         imagesGridAreas.push([way,firstRow + ' / ' + firstColumn + ' / ' +firstRow + ' / ' + (lastColumn + 1) ])
-        // console.log('esta es la gris area final '+(firstRow + ' / ' + firstColumn + ' / ' +firstRow + ' / ' + lastColumn ))
     }else{
          //return new grid area created in only a line for example 
          //all girdAreas from array element given --> grid-area : 3 / 4 / auto / auto  grid-area : 4 / 4 / auto / auto grid-area : 5 / 4 / auto / auto grid-area : 6 / 4 / auto / auto
          //string for result 3 / 4 / 6 / 4
          
         imagesGridAreas.push([way, firstRow + ' / ' + firstColumn + ' / ' + (parseInt(lastRow) + 1) + ' / ' + firstColumn])
-        //  console.log('esta es la gris area final '+(firstRow + ' / ' + firstColumn + ' / ' +lastRow + ' / ' + firstColumn ))
     }
-    // console.log('estos son los elementos del array que vamos a usar para las imagenes de los barcos')
-    // imagesGridAreas.forEach(element => {
-    //     console.log('primer elemento '+element[0])
-    //     console.log('segundo elemento '+element[1])
-    // });
 }
 /**
  * function to check children from element which has grid area equals than cells array has,it means them
@@ -114,9 +140,6 @@ const isShipOnTheWay =  (cells,element,way) => {
     let imagesGridAreas = []
     let i = 0
     for (const cell of element.children) {
-
-        // console.log('"'+cell.style.gridArea+'"')
-        // console.log('"'+cells[0]+'"')
         if(cell.style.gridArea == cells[i]){
             posiblesCells.push(cell)
             i++
@@ -126,7 +149,6 @@ const isShipOnTheWay =  (cells,element,way) => {
         for (const cellp of posiblesCells) {
             cellp.classList.add('shipOnIt')
             cellp.firstElementChild.classList.add('amunnition__red')
-            // console.log('este es el primer hijo de la celda '+cellp.firstElementChild.className)
         }
 
         imagesGridAreas.push(processGridAreas(posiblesCells,way))
@@ -258,7 +280,6 @@ const loadShips = () => {
     
 }
 const loadImages = (element,auxArray) => {
-    console.log('valores para el primer array ')
     fragmentImages = document.createDocumentFragment()
     for (let i = 0; i < 5; i++) {
         //create an image element with classList ship
@@ -269,9 +290,6 @@ const loadImages = (element,auxArray) => {
         +shipLength[i]+auxArray[i][0]+'.png'
         //set gird area valur form iteration from auxArray[1] array
         ship.style.gridArea = auxArray[i][1] 
-        console.log('grid area del barco'+ship.style.gridArea)
-        console.log('path del barco '+ship.getAttribute('src'))
-        console.log('direccion del barco '+imagesGridAreas[i][0])
         fragmentImages.appendChild(ship)
     }
     element.appendChild(fragmentImages)
@@ -279,12 +297,8 @@ const loadImages = (element,auxArray) => {
 }
 const removeGrid = (board,arrayAreas) => {
     let fragmentCells = document.createDocumentFragment()
-    // fragmentCells = board.children
-    console.log(' aqui son los hijos del arrya guardado')
     Array.from(board.children).forEach(element => {
-        console.log('element '+element.tagName)
         fragmentCells.appendChild(element)
-
     });
     board.innerHTML = ''
     loadImages(board,arrayAreas)
@@ -302,10 +316,6 @@ const removeGrid = (board,arrayAreas) => {
        // REOMVE AND STROAGE ALL ELEMENTS FROM EACH BOARD 
        removeGrid(infoZone__ships,imagesGridAreas.slice(5))
        removeGrid(actionZone__ships,imagesGridAreas.slice(0,5))
-       // // FUNCTION TO LOAD SHIP IMAGES INTO BOARDS
-       //load frig cell elements again into its parent
-    //    loadGrid(actionZone__ships,elementAction)
-    //    loadGrid(infoZone__ships,elementInfo)
     }
     
     
@@ -340,7 +350,6 @@ const generateShoot = (element,color) => {
 const gameTurn = (event) => {
     //storage event.target into short name varibale 
     const e = event.target
-    console.log(e)
     //conditional to check if click is on a image o not
     if(e.tagName != 'IMG'){
         //calling function to generate a shoot with a red amunnition
