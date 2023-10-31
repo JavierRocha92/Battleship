@@ -1,64 +1,4 @@
 
-.ballShootRed{
-    animation-name: shootEnemyRed;
-    animation-duration: 5s;
-    animation-timing-function: linear;
-    animation-fill-mode: forwards;
-}
-@keyframes shootEnemyRed {
-    0%{
-        /* background-color: black; */
-        transform: rotate(-7200deg);
-    }
-    50%{
-        top: -20px;
-        left: -50px;
-        /* background-color: black; */
-    }
-    53%{
-        left: -45px;
-        top: -30px;
-    }
-    57%{
-        left:-40px;
-        top: -35px;
-    }
-    60%{
-        left: -35px;
-        top: -38px;
-    }
-    63%{
-        top: -40px;
-        left: -25px;
-    }
-    67%{
-        top: -38px;
-        left: -15px;
-    }
-    70%{
-        top: -35px;
-        left: -10px;
-    }
-    73%{
-        top: -30px;
-        left: -8px;
-    }
-    77%{
-        top: -20px;
-        left: -5px;
-    }
-    85%{
-        top: 0px;
-        transform: rotate(0deg);
-        background-image: url(../assets/images/bullets/pokeballBullet.png);
-    }
-    100%{
-        top: 0px;
-        left: 0px;
-        background-image: url(../assets/images/bullets/superballBullet.png);
-        /* background-color: red; */
-    }
-}
 .ballShootWhite{
     animation-name: shootEnemyWhite;
     animation-duration: 5s;
@@ -107,9 +47,54 @@
         top: -20px;
         left: -5px;
     }
-    85%{
+    84%{
         top: 0px;
         transform: rotate(0deg);
+        background-image: url(../assets/images/bullets/pokeballBullet.png);
+    }
+    85%{
+        transform: scale(3);
+        background-image: url(../assets/images/splash/BattleshipInterfaceSplash1.png);
+    }
+    86%{
+        transform: scale(3);
+        background-image: url(../assets/images/splash/BattleshipInterfaceSplash2.png);
+    }
+    87%{
+        transform: scale(3);
+        background-image: url(../assets/images/splash/BattleshipInterfaceSplash3.png);
+    }
+    88%{
+        transform: scale(3);
+        background-image: url(../assets/images/splash/BattleshipInterfaceSplash4.png);
+    }
+    89%{
+        transform: scale(3);
+        background-image: url(../assets/images/splash/BattleshipInterfaceSplash5.png);
+    }
+    90%{
+        transform: scale(3);
+        background-image: url(../assets/images/splash/BattleshipInterfaceSplash1.png);
+    }
+    91%{
+        transform: scale(3);
+        background-image: url(../assets/images/splash/BattleshipInterfaceSplash2.png);
+    }
+    92%{
+        transform: scale(3);
+        background-image: url(../assets/images/splash/BattleshipInterfaceSplash3.png);
+    }
+    93%{
+        transform: scale(3);
+        background-image: url(../assets/images/splash/BattleshipInterfaceSplash4.png);
+    }
+    94%{
+        transform: scale(3);
+        background-image: url(../assets/images/splash/BattleshipInterfaceSplash5.png);
+    }
+    94%{
+        
+        transform: scale(1);
         background-image: url(../assets/images/bullets/pokeballBullet.png);
     }
     100%{
@@ -117,5 +102,181 @@
         left: 0px;
         background-image: url(../assets/images/bullets/whiteballBullet.png);
         /* background-color: white; */
+    }
+}
+.ballShootRed{
+    animation-name: shootEnemyRed;
+    animation-duration: 5s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+@keyframes shootEnemyRed {
+    0%{
+        /* background-color: black; */
+        transform: rotate(-7200deg);
+    }
+    50%{
+        top: -20px;
+        left: -50px;
+        /* background-color: black; */
+    }
+    53%{
+        left: -45px;
+        top: -30px;
+    }
+    57%{
+        left:-40px;
+        top: -35px;
+    }
+    60%{
+       left: -35px;
+       top: -38px;
+    }
+    63%{
+        top: -40px;
+        left: -25px;
+    }
+    67%{
+        top: -38px;
+        left: -15px;
+    }
+    70%{
+        top: -35px;
+        left: -10px;
+    }
+    73%{
+        top: -30px;
+        left: -8px;
+    }
+    77%{
+        top: -20px;
+        left: -5px;
+    }
+    84%{
+        top: 0px;
+        transform: rotate(0deg);
+        background-image: url(../assets/images/bullets/pokeballBullet.png);
+    }
+    85%{
+        transform:scale(2);
+        background-image: url(../assets/images/fire/BattleshipInterfaceFire1.png);
+    }
+    86%{
+        transform:scale(2);
+        background-image: url(../assets/images/fire/BattleshipInterfaceFire2.png);
+    }
+    87%{
+        transform:scale(2);
+        background-image: url(../assets/images/fire/BattleshipInterfaceFire3.png);
+    }
+    88%{
+        transform:scale(2);
+        background-image: url(../assets/images/fire/BattleshipInterfaceFire4.png);
+    }
+    89%{
+        transform:scale(2);
+        background-image: url(../assets/images/fire/BattleshipInterfaceFire5.png);
+    }
+    90%{
+        transform:scale(2);
+        background-image: url(../assets/images/fire/BattleshipInterfaceFire1.png);
+    }
+    91%{
+        transform:scale(2);
+        background-image: url(../assets/images/fire/BattleshipInterfaceFire2.png);
+    }
+    92%{
+        transform:scale(2);
+        background-image: url(../assets/images/fire/BattleshipInterfaceFire3.png);
+    }
+    93%{
+        transform:scale(2);
+        background-image: url(../assets/images/fire/BattleshipInterfaceFire4.png);
+    }
+    94%{
+        transform:scale(2);
+        background-image: url(../assets/images/fire/BattleshipInterfaceFire5.png);
+    }
+    94%{
+        transform: scale(2);
+        background-image: url(../assets/images/fire/fireMoving.gif);
+    }
+    100%{
+        top: 0px;
+        left: 0px;
+        transform: scale(2);
+        background-image: url(../assets/images/fire/fireMoving.gif);
+        align-self: flex-start;
+        /* background-color: white; */
+    }
+}
+.animation__container{
+ animation-name: earthquake;
+ animation-duration: 2s;
+ animation-timing-function: linear;
+}
+@keyframes earthquake {
+    0%{
+        left: -5px;
+    }
+    5%{
+        left: 5px;
+    }
+    10%{
+        left: -5px;
+    }
+    15%{
+        left: 5px;
+    }
+    20%{
+        left: -5px;
+    }
+    25%{
+        left: 5px;
+    }
+    30%{
+        left: -5px;
+    }
+    35%{
+        left: 5px;
+    }
+    40%{
+        left: -5px;
+    }
+    45%{
+        left: 5px;
+    }
+    50%{
+        left: -5px;
+    }
+    55%{
+        left: 5px;
+    }
+    60%{
+        left: -5px;
+    }
+    65%{
+        left: 5px;
+    }
+    70%{
+        left: -5px;
+    }
+    75%{
+        left: 5px;
+    }
+    80%{
+        left: -5px;
+    }
+    85%{
+        left: 5px;
+    }
+    90%{
+        left: -5px;
+    }
+    95%{
+        left: 5px;
+    }
+    100%{
+        left: 5px;
     }
 }

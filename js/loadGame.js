@@ -13,18 +13,6 @@ const postionBall = [
 'i1','i2','i3','i4','i5','i6','i7','i8','i9','i10',
 'j1','j2','j3','j4','j5','j6','j7','j8','j9','j10',
 ]
-// const postionPlayer = [
-// 'pa1','pa2','pa3','pa4','pa5','pa6','pa7','pa8','pa9','pa10',
-// 'pb1','pb2','pb3','pb4','pb5','pb6','pb7','pb8','pb9','pb10',
-// 'pc1','pc2','pc3','pc4','pc5','pc6','pc7','pc8','pc9','pc10',
-// 'pd1','pd2','pd3','pd4','pd5','pd6','pd7','pd8','pd9','pd10',
-// 'pe1','pe2','pe3','pe4','pe5','pe6','pe7','pe8','pe9','pe10',
-// 'ef1','ef2','ef3','ef4','ef5','ef6','ef7','ef8','ef9','ef10',
-// 'eg1','eg2','eg3','eg4','eg5','eg6','eg7','eg8','eg9','eg10',
-// 'eh1','eh2','eh3','eh4','eh5','eh6','eh7','eh8','eh9','eh10',
-// 'ei1','ei2','ei3','ei4','ei5','ei6','ei7','ei8','ei9','ei10',
-// 'ej1','ej2','ej3','ej4','ej5','ej6','ej7','ej8','ej9','ej10',
-// ]
 
 //GLOBAL VARIABLED
 
@@ -68,16 +56,19 @@ const createCell = (row,column) => {
 const loadCells = () => {
     fragment1 = document.createDocumentFragment()
     fragment2 = document.createDocumentFragment()
-
-    for (let i = 1; i <= 10; i++) {
-        for (let j = 1; j <= 10; j++) {
-            const cell1 = createCell(i,j)
-            cell1.classList.add('p'+postionBall[i])
-            cell1.appendChild(createElement('DIV','amunnition', 'ballEnemyOutside','p'+postionBall[i]))
+    let position = ''
+    for (let i = 0; i < 10; i++) {
+        for (let j = 0; j < 10; j++) {
+            position = ( i * 10 ) + j
+            const cell1 = createCell(i+1,j+1)
+            cell1.classList.add('e'+postionBall[position])
+            cell1.id = '_e'+postionBall[position]
+            cell1.appendChild(createElement('DIV','amunnition', 'ballEnemyOutside','e'+postionBall[position]))
             fragment1.appendChild(cell1)
-            const cell2 = createCell(i,j)
-            cell2.classList.add('e'+postionBall[i])
-            cell2.appendChild(createElement('DIV','amunnition','e'+postionBall[i]))
+            const cell2 = createCell(i+1,j+1)
+            cell2.classList.add('p'+postionBall[position])
+            cell2.id = '_p'+postionBall[position]
+            cell2.appendChild(createElement('DIV','amunnition','e'+postionBall[position]))
             fragment2.appendChild(cell2)
         }
     }
@@ -317,51 +308,6 @@ const removeGrid = (board,arrayAreas) => {
        removeGrid(infoZone__ships,imagesGridAreas.slice(5))
        removeGrid(actionZone__ships,imagesGridAreas.slice(0,5))
     }
-    
-    
-    /////********************************************************* */
-//FUNCTION FOR GAME LOGIC
-/////********************************************************* */
-/**
- * function to create a specific item and give a classList depending of color given as parameter
- * 
- * @param {string} color 
- * @returns htmldivelement
- */
-const createAmunnition =  (color) => {
-    let amunnition = document.createElement('DIV')
-    amunnition.classList.add('amunnition_'+color)
-    return amunnition
-}/**
-function to insert into a spedific element given as parameter amunnition element
- * 
- * @param {HTMLDivElement} element 
- * @param {string} color 
- */
-const generateShoot = (element,color) => {
-    element.appendChild(createAmunnition(color))
-    
-}
-/**
- * function to call generateShoot() function take as parameter a color depending of element even.target type
- * 
- * @param {event} event 
- */
-const gameTurn = (event) => {
-    //storage event.target into short name varibale 
-    const e = event.target
-    //conditional to check if click is on a image o not
-    if(e.tagName != 'IMG'){
-        //calling function to generate a shoot with a red amunnition
-        generateShoot(e,'white')
-    }else{
-        //calling function to generate a shoot with a white amunnition
-        generateShoot(e,'red')
-    }
-
-}
 
 //EVENTS
-actionZone__ships.addEventListener('click',gameTurn)
-infoZone__ships.addEventListener('click',gameTurn)
 document.addEventListener('DOMContentLoaded',loadGame)

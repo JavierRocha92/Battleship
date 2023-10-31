@@ -21,6 +21,7 @@ body{
     "actionZone"
     "infoZone";
     border: 1px solid black;
+    position: relative;
 }
 .header,.footer{
     display: none;
@@ -136,13 +137,8 @@ body{
     /* border-radius: 50%; */
     background-image: url(../assets/images/bullets/pokeballBullet.png);
     background-size: contain;
+    background-repeat: no-repeat;
     background-color: transparent;
-}
-.amunnition__red{
-    /* background-color: red; */
-}
-.amunnition__white{
-    /* background-color: white; */
 }
 .ship{
     object-fit: contain;
