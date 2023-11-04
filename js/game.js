@@ -1,5 +1,12 @@
 //VARIABLES
-
+//global variable to check if shoot hit a ship
+let shootOnTarget = false
+//global varibale to storage the last shot
+let lastShoot
+//global varibel to storage cell sorrounded the last shoot on target
+let cellSorround
+//global variable to detect if shootOnTarget is sorrounded
+let sorrounded = true
 //global variables to count how many shoot made each player
 let enemyShoots = 0
 let enemyShootsOnTarget = 0
@@ -9,9 +16,10 @@ let playerShootsOnTarget = 0
 let turnPlayer = true
 //golbal varable to storage first ship position for machine intelligence
 let firstPosition = null
+
 //gloabal vairbales araay to storage letter and numbers corerponding to cell positions
 const letters = ['a','b','c','d','e','f','g','h','i','j']
-const numbers = [1,2,3,4,5,6,7,8,9,10]
+const numbers = ['1','2','3','4','5','6','7','8','9','10']
 /**
  * function to filter tagName of event.target to call or not function 
  * to generate an animation
@@ -24,7 +32,7 @@ const shoot = (event = false, cellId) => {
         // console.log('aqui es donde pulso '+e.classList)
         if(e.tagName === 'DIV'){
             if(turnPlayer){
-                generateAnimation(e)
+                generateAnimation(e,PlayerShipsMap)
                 turnPlayer = false
                 e.addEventListener('animationend',machineTurn)
             }
@@ -32,7 +40,7 @@ const shoot = (event = false, cellId) => {
     }else{
         Array.from(actionZone__ships.children).forEach((cell) => {
             if(cell.getAttribute('id') == cellId){
-                generateAnimation(cell)
+                generateAnimation(cell,EnemyShipsMap)
                 cell.classList.add('disabled')
             }
         })
@@ -58,9 +66,11 @@ const getCellByPosition = (position) => {
  * @param {HTMLAllCollection} cells 
  */
 const getCellById = (cellId,cells) => {
-    console.log('entro en la funcion de id')
-    for(const cell of Array.from(cells)){
+    console.log('este es el id que tenemos que interpretar '+cellId)
+    for(const cell of Array.from(cells.children)){
+        console.log('este es cada uno de los id '+cell.id)
         if(cell.id == cellId){
+            console.log('esta es la celda que coinicde ')
             return cell
         }
     }
@@ -99,88 +109,85 @@ const detectShip = () => {
     }
     return null
 }
-const changeId = (itemToChoose,cellId) => {
-    let positionItem
-    let randomPos 
-    let auxArray
-    let newId
-    console.log('este es el elemento que voy a cmabiar '+itemToChoose)
-    if(isNaN(itemToChoose)){
-        auxArray = [...letters]
-        console.log('cambio la letra')
-    }else{
-        auxArray = [...numbers]
-        console.log('cambio el numero')
-    }
-    positionItem = auxArray.indexOf(itemToChoose)
-    console.log('esta es la poscion del item dentro del array '+positionItem)
-    do{
-
-        do{
-            randomPos = Math.floor(Math.random() * 2 - 1)
-        }while((positionItem == 0 && randomPos == -1) || (positionItem == 9 && randomPos == 1))
-        console.log('esta es la posicion del nuevo elemento '+(positionItem + randomPos))
-        // console.log(' esta es la posicion de la letra '+positionItem)
-        // console.log(' este es el numero aleatorio '+randomPos)
-        // console.log('esta es la nueva letra que se escoge al azar '+letters[(positionItem + randomPos)])
-        if(isNaN(itemToChoose)){
-            newId = '_p' + letters[(positionItem + randomPos)] + cellId.substring(3)
+/**
+ * function to generate an id depeding of parameters add or quit a specific position form number or letter from any id from cells
+ * 
+ * @param {number} itemPosition 
+ * @param {Array} items 
+ * @param {string or number} item 
+ * @param {number} i 
+ * @returns strign or null value
+ */
+const generateIdFromOther = (itemPosition,items,item,i) => {
+    let cellIdToCheck
+    if(((itemPosition + i) < 10) && ((itemPosition + i) > -1)){
+        if(isNaN(item)){
+            newId = '_p' + item + items[(itemPosition + i)]
         }else{
-            newId = '_p' + cellId.substring(2,3) + numbers[(positionItem + randomPos)]
+            newId = '_p' + items[(itemPosition + i)] + item
         }
-    }while(cellId == newId)
-    console.log('este es el id que le paso por parametro '+cellId)
-    console.log('este es el nuevo id que genero a cambiar un parametro del original '+newId)
-    return newId
+        cellIdToCheck = getCellById(newId,actionZone__ships)
+        if(!cellIdToCheck.classList.contains('disabled'))
+            return newId
+    }
+    return null
 }
 /**
- * function to choose waht element form id change for next shoot to shoot every posibilities the ship is around the flame
+ * function to generate an array with id from sorrounding cell to cell which has cellId given as parameter
  * 
- * @param {string} position id from cell with a flame on it
- * @returns number or letter from this id dpending of random choice
-*/
-const chooseIdRandom = (position) =>{
-    //get a random number to choose between 2 option by randomly choice
-    random = Math.floor(Math.random() * 1)
-    //conditional to return only letter
-    if(random == 0){
-        return position.substring(2,3)
-    }
-    //conditional to return only number
-    else{
-        return position.substring(3)
-    }
-}
-const setPosition = (cellId) => {
-    //declare varible to storage target cell in it to compare later
-    let cellTarget
+ * @param {string} cellId 
+ * @returns array
+ */
+const generateSorroundedIds = (cellId) => {
     let newId
-    if(!firstPosition){
-        firstPosition = cellId 
+    let arrayAux = []
+    //letter and number from cell id
+    let letter = cellId.substring(2,3)
+    let number = cellId.substring(3)
+    //specific position in array of values for number and letter from cellId
+    let numberIdPosition = numbers.indexOf(number)
+    let letterIdPosition = letters.indexOf(letter)
+    //for loop to insert values sorrounded cell by changind number
+    for (let i = -1; i <= 1; i+=2) {
+        
+            newId = generateIdFromOther(numberIdPosition,numbers,letter,i)
+            if(newId)
+            arrayAux.push(newId)
+            newId = generateIdFromOther(letterIdPosition,letters,number,i)
+            if(newId)
+            arrayAux.push(newId)
+
     }
-    do{
-        newId = changeId(chooseIdRandom(cellId),cellId)
-        console.log('este es el id nuevo cambiando uno de los parametros '+newId)
-        cellTarget = getCellById(newId,actionZone__ships.children)
-        console.log('esta es la celda objetivo '+cellTarget.id)
-        console.log('esta son las clases de la celdd objetivo '+cellTarget.classList)
-    }while(cellTarget.classList.contains('disabled'))
-    return cellTarget.id
+    return arrayAux
 }
+/**
+ * function to choose a postion from array given as paramere by randomly choosing
+ * 
+ * @param {Array} positions 
+ * @returns 
+ */
+const getPosition = (positions) =>{
+    let random = Math.floor(Math.random() * positions.length)
+    let position = positions[random]
+    positions.splice(random,1)
+    if(positions.length == 0){
+        sorrounded = true
+    }
+    return position
+}
+
 /**
  * function to emulate machine intelligence by calling other function
  */
 const machineTurn = () => {
-    //calling method to get id from cell with a flame on it
-    let positionShoot = detectShip()
-    console.log('esta es la celda donde se ha detectado un barco '+positionShoot)
-    //callig method setPosition() if positionShip return something
-    if(positionShoot != null){
-        //calling fucntion to choose a position where a ship may be in, around the flame
-        positionShoot = setPosition(positionShoot)
-        console.log('esta es la celda donde quiero disparar alrrededor del barco '+positionShoot)
+    let positionShoot
+    if(shootOnTarget){
+        sorrounded = false
+        cellSorround  = generateSorroundedIds(lastShoot)
+        positionShoot = getPosition(cellSorround)
+    }else if(!sorrounded){
+        positionShoot = getPosition(cellSorround)
     }else{
-        //calling method to get a random positoin if there are not shootable ships in board 
         positionShoot ='_p' + randomPosition()
     }
     shoot(false,positionShoot)

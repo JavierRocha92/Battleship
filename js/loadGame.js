@@ -13,6 +13,8 @@ let positionBall = [
     "a9", "b9", "c9", "d9", "e9", "f9", "g9", "h9", "i9", "j9",
     "a10", "b10", "c10", "d10", "e10", "f10", "g10", "h10", "i10", "j10"
 ];
+let EnemyShipsMap = []
+let PlayerShipsMap = []
 
 //GLOBAL VARIABLED
 
@@ -284,11 +286,16 @@ const loadImages = (element,auxArray) => {
         fragmentImages.appendChild(ship)
     }
     element.appendChild(fragmentImages)
-    //HAY QUE DAR BIEN LAS RUTAS Y ECHAR UN VIASTAZO SI LA SITNTAZIS DE LOS GRIS AREAS ESTASN BIEN
 }
-const removeGrid = (board,arrayAreas) => {
+const removeGrid = (board,arrayAreas,map) => {
     let fragmentCells = document.createDocumentFragment()
     Array.from(board.children).forEach(element => {
+        if(element.classList.contains('shipOnIt')){
+            map.push('.' + element.id)
+            element.classList.remove('shipOnIt')
+        }else{
+            map.push(element.id)
+        }
         fragmentCells.appendChild(element)
     });
     board.innerHTML = ''
@@ -305,8 +312,8 @@ const removeGrid = (board,arrayAreas) => {
        // LOAD PROTOYPE SHIPS INTO DOM
        loadShips()
        // REOMVE AND STROAGE ALL ELEMENTS FROM EACH BOARD 
-       removeGrid(infoZone__ships,imagesGridAreas.slice(5))
-       removeGrid(actionZone__ships,imagesGridAreas.slice(0,5))
+       removeGrid(infoZone__ships,imagesGridAreas.slice(5),PlayerShipsMap)
+       removeGrid(actionZone__ships,imagesGridAreas.slice(0,5),EnemyShipsMap)
     }
 
 //EVENTS
