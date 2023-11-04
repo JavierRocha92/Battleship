@@ -24,19 +24,27 @@ const generateAnimation = (cell,map) =>{
         if(cell.id.substring(1,2) === 'p'){
             shootOnTarget = true
             lastShoot = cell.id
+            enemyShootsOnTarget++
+        }else{
+            playerShootsOnTarget++
         }
     }else{
         ball.classList.add('ballShootWhite')
-        if(cell.id.substring(1,2) === 'p')
+        if(cell.id.substring(1,2) === 'p'){
             shootOnTarget = false
+            enemyShoots++
+        }else{
+            playerShoots++
         }
+    }
     ball.addEventListener('animationend',()=>{
         ball.classList.remove('ballEnemyOutside')
+        if(cell.id.substring(1,2) === 'p'){
+            turnPlayer = true
+        }
     })
-    
+
 }
-
-
 // container.addEventListener('animationend',()=>{
 //     container.classList.remove('animation__container')
 // })
