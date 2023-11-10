@@ -45,10 +45,12 @@
                     </div>
                 </div>
                 <!-- TITLE TO SHOW PLAYER TURN, END OR BEGIN GAME -->
-                <h2 class="actionZone__title">
+            </section>
+            <div class="actionZone__title-container">
+                <h2 class="actionZone__title appearText" id="actionZone__title">
                     START BATTLE
                 </h2>
-            </section>
+            </div>
         </main>
         <!-- INFO ZONE -->
         <aside class="infoZone">
@@ -72,12 +74,24 @@
             </div>
             <!-- ENEMY ZONE -->
             <div class="infoZone_fleet">
-                esta es la flota del enemigo
             </div>
         </aside>
-        <footer class="footer">
-    
+        <footer class="footer" id="footer">
+            <div class="contianer__icon">
+                <img src="./assets/images/buttons/button_music.png" id="music__icon" alt="" class="icon">
+                <div class="red_bar hide"></div>
+            </div>
+            <div class="contianer__icon">
+                <img src="./assets/images/buttons/button_sound.png" id="sound__icon" alt="" class="icon">
+                <div class="red_bar hide"></div>
+            </div>
+            <div class="contianer__icon">
+                <img src="./assets/images/buttons/button_vibration.png" id="vibration__icon" alt="" class="icon">
+                <div class="red_bar hide"></div>
+            </div>
         </footer>
+        <audio id="musicGame" src="./assets/sounds/3 20 Hammer Bros. Battle.mp3"></audio>
+        <audio id="shootSound" src="./assets/sounds/mario-bros-firework.mp3"></audio>
     </div>
     <!-- BOOTSTRAP JS FILE -->
     <script src="./js/bootstrap.bundle.min.js"></script>
@@ -85,5 +99,7 @@
     <script src="./js/loadGame.js"></script>
     <script src="./js/shoots.js"></script>
     <script src="./js/game.js"></script>
+    <script src="./js/endGame.js"></script>
+    <script src="./js/animation.js"></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 
 .ballShootWhite{
     animation-name: shootEnemyWhite;
-    animation-duration: 0,1s;
+    animation-duration: 4s;
     animation-timing-function: linear;
     animation-fill-mode: forwards;
 }
@@ -106,7 +106,7 @@
 }
 .ballShootRed{
     animation-name: shootEnemyRed;
-    animation-duration: 5s;
+    animation-duration: 4s;
     animation-timing-function: linear;
     animation-fill-mode: forwards;
 }
@@ -280,3 +280,46 @@
         left: 5px;
     }
 }
+
+.appearText{
+    animation-name: appearText ;
+    animation-duration: .5s;
+    animation-iteration-count: 2;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+@keyframes appearText {
+    0%{
+        opacity: 0;
+        transform: scale(1);
+    }
+    50%{
+        opacity: 1;
+        transform: scale(1.5);
+
+    }
+    100%{
+        opacity: 1;
+        transform: scale(1);
+
+    }
+}
+.desappearText{
+    animation-name: desappearText ;
+    animation-duration: .5s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+@keyframes desappearText {
+    0%{
+        opacity: 1;
+        transform: scale(1);
+    }
+    100%{
+        opacity: 0;
+        transform: scale(1);
+    }
+}
+
