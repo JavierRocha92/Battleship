@@ -14,6 +14,7 @@ body{
     justify-content: center;
 }
 .container{
+    position: relative;
     width: 100%;
     display: grid;
     grid-template-columns: 1fr;
@@ -22,7 +23,7 @@ body{
     "actionZone"
     "infoZone"
     "footer";
-    cursor: crosshair;
+    /* cursor: crosshair; */
     position: relative;
     margin: 0;
     padding: 0;
@@ -96,7 +97,8 @@ body{
     grid-row: 5/8;
 }
 .actionZone__board,.infoZone__board{
-    cursor: url('../assets/images/crosshair_pointer__red.png') 10 10 ,auto;
+    cursor: url('../assets/images/crosshair_pointer__red.png'),auto;
+    zoom: 1;
     height: 270px;
     width: 270px;
     background-image: url(../assets/images/board.jpg);
@@ -118,7 +120,7 @@ body{
     justify-content: space-between;
     align-items: center;
     /* margin-top: 5px; */
-    cursor: crosshair;
+    /* cursor: crosshair; */
     background-image: url(../assets/images/backgorund_water.gif);
     background-repeat: no-repeat;
     background-size: cover;
@@ -150,6 +152,7 @@ body{
     align-items: center;
     /* cursor: crosshair; */
 }
+
 .amunnition{
     position: relative;
     top: 1000px;
@@ -169,7 +172,7 @@ body{
     place-self: center;
     opacity: 1;
 }
-.footer{
+.section__buttons{
     display: flex;
     justify-content: space-evenly;
     background-color: #555555;
@@ -195,8 +198,75 @@ body{
     border-radius: 2px;
 }
 .hide{
-    display: none;
+    opacity: 0;;
 }
 .show{
     display: block;
 }
+
+/* FOOTER STYLES */
+
+.footer{
+    opacity: 0;
+    position: absolute;
+    top: 705px;
+    left: 50%;
+    color: white;
+    transform: translate(-50%);
+    width: 400px;
+    padding: 10px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* border: 1px solid red; */
+    background-color: rgba(68, 166, 68, 0.753);
+}
+.footer__title{
+    text-align: center;
+    padding: 8px;
+    width: 80%;
+}
+.table{
+    border-collapse: separate;
+    color: white;
+}
+.th,.td{
+    text-align: center;
+    border: 1px solid white;
+}
+.td_player{
+    background-color: blue;
+}
+.td_cpu{
+    background-color: red;
+}
+.footer__button{
+background-color: rgba(0, 0, 255, 0.448);
+box-shadow: 1px 1px 10px blue;
+width: 50%;
+text-align: center;
+padding: 8px;
+border-radius: 3px;
+font-weight: bold;
+color: white;
+transition: all 1s ease;
+}
+.footer__button:hover{
+    background-color: white;
+    color: rgba(0, 0, 255, 0.448);
+    box-shadow: none;
+}
+
+.bg-red{
+    background-color: red;
+}
+.bg-green{
+    background-color: green;
+}
+.bg-white{
+    background-color: white;
+}
+
+

@@ -1,6 +1,19 @@
 const infoZone__ships = document.getElementById('infoZone__ships')
 const actionZone__ships = document.getElementById('actionZone__ships')
 let iterator = 0
+let matriz = [
+    ["a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1", "i1", "j1"],
+    ["a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2", "i2", "j2"],
+    ["a3", "b3", "c3", "d3", "e3", "f3", "g3", "h3", "i3", "j3"],
+    ["a4", "b4", "c4", "d4", "e4", "f4", "g4", "h4", "i4", "j4"],
+    ["a5", "b5", "c5", "d5", "e5", "f5", "g5", "h5", "i5", "j5"],
+    ["a6", "b6", "c6", "d6", "e6", "f6", "g6", "h6", "i6", "j6"],
+    ["a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7", "i7", "j7"],
+    ["a8", "b8", "c8", "d8", "e8", "f8", "g8", "h8", "i8", "j8"],
+    ["a9", "b9", "c9", "d9", "e9", "f9", "g9", "h9", "i9", "j9"],
+    ["a10", "b10", "c10", "d10", "e10", "f10", "g10", "h10", "i10", "j10"]
+  ]
+  
 let positionBall = [
     "a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1", "i1", "j1",
     "a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2", "i2", "j2",
@@ -17,18 +30,20 @@ let EnemyShipsMap = []
 let PlayerShipsMap = []
 
 //GLOBAL VARIABLED
-
+let dateBegin = new Date()
 shipLength = [5,4,3,3,2]
 imagesGridAreas = []
 
 /////********************************************************* */
 //FUNCTION FOR CREATING DIV AS CELLS
 /////********************************************************* */
-const createElement = (tag,clas1,clas2 = false,iD = false) => {
+const createElement = (tag,clas1,clas2 = false, clas3 = false,iD = false) => {
     const element = document.createElement(tag)
     element.classList.add(clas1)
     if(clas2)
     element.classList.add(clas2)
+    if(clas3)
+    element.classList.add(clas3)
     if(iD)
     element.id = iD
     return element
@@ -65,12 +80,12 @@ const loadCells = () => {
             const cell1 = createCell(i+1,j+1)
             cell1.classList.add('e'+positionBall[position])
             cell1.id = '_e'+positionBall[position]
-            cell1.appendChild(createElement('DIV','amunnition', 'ballEnemyOutside','e'+positionBall[position]))
+            cell1.appendChild(createElement('DIV','amunnition', 'hide','ballEnemyOutside','e'+positionBall[position]))
             fragment1.appendChild(cell1)
             const cell2 = createCell(i+1,j+1)
             cell2.classList.add('p'+positionBall[position])
             cell2.id = '_p'+positionBall[position]
-            cell2.appendChild(createElement('DIV','amunnition','p'+positionBall[position]))
+            cell2.appendChild(createElement('DIV','amunnition', 'hide','p'+positionBall[position]))
             fragment2.appendChild(cell2)
         }
     }

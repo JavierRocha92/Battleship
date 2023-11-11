@@ -13,11 +13,15 @@ let lastShoot
 let cellsSorround
 //global variable to detect if shootOnTarget is sorrounded
 let sorrounded = true
-//global variables to count how many shoot made each player
-let enemyShoots = 0
-let enemyShootsOnTarget = 0
-let playerShoots = 0
-let playerShootsOnTarget = 0
+//global json to count how many shoot made each player
+let stats = {
+    enemyShoots: 0,
+    playerShoots: 0,
+    enemyShootsOnTarget: 0,
+    playerShootsOnTarget: 0
+};
+//global boolean varibale to determinate end of the game
+let end = false
 //global variable for turn management
 let turnPlayer = true
 //golbal varable to storage first ship position for machine intelligence
@@ -35,27 +39,28 @@ const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
  * @param {event} event 
  */
 const shoot = (event = false, cellId) => {
-    if (event) {
-        const e = event.target
-        //conditinal is event listener is a div for player turn
-        if (e.tagName === 'DIV') {
-            if (turnPlayer) {
-                showTarget(e.id,true)
-                console.log(' es turno de la maquina')
-                generateAnimation(e, PlayerShipsMap)
-                turnPlayer = false
-                e.addEventListener('animationend', machineTurn)
+    if (!end) {
+        if (event) {
+            const e = event.target
+            //conditinal is event listener is a div for player turn
+            if (e.tagName === 'DIV') {
+                if (turnPlayer) {
+                    showTarget(e.id)
+                    generateAnimation(e, PlayerShipsMap)
+                    turnPlayer = false
+                    // e.addEventListener('animationend',machineTurn)
+                }
             }
+        } else {
+            //machine turn
+            Array.from(actionZone__ships.children).forEach((cell) => {
+                if (cell.getAttribute('id') == cellId) {
+                    showTarget(cellId)
+                    generateAnimation(cell, EnemyShipsMap)
+                    cell.classList.add('disabled')
+                }
+            })
         }
-    } else {
-        //machine turn
-        Array.from(actionZone__ships.children).forEach((cell) => {
-            if (cell.getAttribute('id') == cellId) {
-                showTarget(cellId)
-                generateAnimation(cell, EnemyShipsMap)
-                cell.classList.add('disabled')
-            }
-        })
     }
 
 }
@@ -165,10 +170,10 @@ const generateSorroundedIds = (cellId) => {
  * @param {string} clas classList parameter to show depemding 
  * @returns id form the first matching cell
  */
-const getCellByClassList = (clas) =>{
+const getCellByClassList = (clas) => {
     for (const cell of Array.from(actionZone__ships.children)) {
-        if(cell.classList.contains(clas))
-        return cell.id
+        if (cell.classList.contains(clas))
+            return cell.id
     }
     return null
 }
@@ -191,18 +196,19 @@ const getPosition = (positions) => {
     }
     return position
 }
-const checkSorround = (ids) =>{
+const checkSorround = (ids) => {
     let cell
     let ball
     for (const id of ids) {
-        cell = getCellById(id,actionZone__ships)
+        cell = getCellById(id, actionZone__ships)
         ball = cell.firstElementChild
-        if(!ball.classList.contains('ballShootWhite')){
+        if (!ball.classList.contains('ballShootWhite')) {
             return true
         }
     }
     return false
 }
+
 /**
  * function to emulate machine intelligence by calling other function
  */
@@ -257,61 +263,11 @@ const machineTurn = () => {
     }
     //calling method to genreate a shoot to cell which id matches to parameter
     shoot(false, positionShoot)
-    
-}
-const isNotBallLimit = (ball) => {
-    return ball.classList.contains('ballShootWhite')
-}
-const generateShootByPosition = (position,way) => {
-    let newId
-    if(way === 'vertical'){
-        if(counterLimit == 0)
-        newId = '_p' + position.substring(2,3) + parseInt(position.substring(3) + 1)
-        else
-        newId = '_p' + position.substring(2,3) + parseInt(position.substring(3) - 1)
-    }
-    if(way === 'horizontal'){
-        let letter = position.substring(2,3)
-        let letterPosition = letters.indexOf(letter)
-        let newLetter
-        if(counterLimit == 0)
-        newLetter = letters[(letterPosition + 1)]
-        else
-        newLetter = letters[(letterPosition - 1)]
 
-        newId = '_p' + newLetter + position.substring(3)
-    }
-    //generamos una celda respecto al id que le pasamos
-    cell = getCellById(newId,actionZone__ships)
-    //miramos si existe para si no devolver false porque indicaria que es un limite
-    if(cell){
-        //generamos el hijo de dicha celda si esta existe
-        ball = cell.firstElementChild
-        //miramos si esta bola tiene la clase de bola blanca para indicar tambien que es un limite
-        if(isNotBallLimit(ball)){
-            //si no lo es de ninguna de las dos manera devolvemos el id para que tire enn esa celda
-            return newId
-        }
-    }
-    //aqui deovlemos falso para que ponga el limite e atrue y purebe con el otro  limite
-    return false
 }
-const getWay = (lastShoot,firstShootOnTarget) => {
-    console.log('este es para dar la direccion ')
-    console.log('este es el ultimo diaparo '+lastShoot)
-    console.log('este es el primero '+firstShootOnTarget)
-    if(lastShoot.substring(3) === firstShootOnTarget.substring(3))
-        return 'horizontal'
-    else
-        return 'vertical'
-}
-const setValues = () => {
-    firstShootOnTarget = null
-    lastShoot = null
-    counterLimit = 0
-    cellsSorround = []
-    way = null
-}
+
+
+
 // const machineTurn = () => {
 //     let positionShoot
 //     //primero genero una posciion aleatoria 
@@ -327,7 +283,7 @@ const setValues = () => {
 //             if(!way){
 //                 way = getWay(lastShoot,firstShootOnTarget)
 //             }
-            
+
 //         }
 //         if(way){
 //             //aqui llamos a edte metodo para que me devulve un id odne tirar la bola, si este es falso pongo el primer limite a false y pruebo cone l otro k¡limite
@@ -350,7 +306,7 @@ const setValues = () => {
 //         if(!positionShoot)
 //         positionShoot = getPosition(cellsSorround)
 //         //genero un a rray con las posicion de alrrededro pasandole como parametro la ultima posicion
-        
+
 //     }else{
 //         //aqui entro cuando en la ultimavez no he dado a un barco entonces sigo tirando con el array mediante una posicion aleatoria
 //         if(cellsSorround){
@@ -365,12 +321,20 @@ const setValues = () => {
 //     shoot(false,positionShoot)
 // }
 
+const startGame = () => {
+    // showTarget(false,'START BATTLE')
+    showTarget('YOUR TURN')
+
+}
 
 // //events
-
+document.addEventListener('DOMContentLoaded', startGame)
 infoZone__ships.addEventListener('click', shoot)
-document.addEventListener('DOMContentLoaded',() => {
+document.addEventListener('DOMContentLoaded', () => {
     musicGame.play()
+
 })
+
+
 
 

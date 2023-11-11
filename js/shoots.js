@@ -1,8 +1,11 @@
 //elements form DOM
 // const infoZone__ships = document.getElementById('infoZone__ships')
 // const actionZone__ships = document.getElementById('actionZone__ships')
-const container = document.getElementById('container')
+
 const shootSound = document.getElementById('shootSound')
+const shootWater = document.getElementById('shootWater')
+const gameOver = document.getElementById('gameOver')
+const winnerSound = document.getElementById('winner')
 const actionZone__title = document.getElementById('actionZone__title')
 //functions
 
@@ -16,9 +19,16 @@ const cellIdHasPoint = (cell,map) =>{
         }
     }
 }
-const shootOn = () =>{
+const shootOnFire = () =>{
     shootSound.play()
+    toVibrate()
 }
+const shootOnWater = () =>{
+    shootWater.play()
+}
+// const showBall = (ball) => {
+//     ball.classList.remove('hide')
+// }
 /**
  * function to add classList to a cell dependig of its classList to generate 
  * an animation or other
@@ -26,33 +36,47 @@ const shootOn = () =>{
  * @param {HTMLDivElement} cell 
  */
 const generateAnimation = (cell,map) =>{
-    setTimeout(shootOn,3300)
+    notVibrate()
     const ball = cell.firstElementChild
     if(cellIdHasPoint(cell,map)){
+        setTimeout(shootOnFire,3300)
         ball.classList.add('ballShootRed')
+        // setTimeout(() => {
+        //     showBall(ball)
+        // },800)
         if(cell.id.substring(1,2) === 'p'){
             shootOnTarget = true
             lastShoot = cell.id
-            enemyShootsOnTarget++
+            stats.enemyShootsOnTarget++
+            stats.enemyShoots++
         }else{
-            playerShootsOnTarget++
+            stats.playerShootsOnTarget++
+            stats.playerShoots++
         }
     }else{
+        setTimeout(shootOnWater,3300)
         ball.classList.add('ballShootWhite')
+        // setTimeout(() => {
+        //     showBall(ball)
+        // },800)
         if(cell.id.substring(1,2) === 'p'){
             shootOnTarget = false
-            enemyShoots++
+            stats.enemyShoots++
         }else{
-            playerShoots++
+            stats.playerShoots++
         }
     }
     ball.addEventListener('animationend',()=>{
         ball.classList.remove('ballEnemyOutside')
+        let id = cell.getAttribute('id')
         if(cell.id.substring(1,2) === 'p'){
             turnPlayer = true
+            showTarget('YOUR TURN')
             checkScore('machine')
         }else{
+            showTarget('ENEMY TURN')
             checkScore('player')
+            setTimeout(machineTurn,1000)
         }
     })
 
@@ -60,37 +84,7 @@ const generateAnimation = (cell,map) =>{
 // container.addEventListener('animationend',()=>{
 //     container.classList.remove('animation__container')
 // })
-const showTarget = (text,player = false) => {
-    // actionZone__title.textContent = ''
-    let firstText = actionZone__title.textContent
-    actionZone__title.classList.remove('appearText')
-    actionZone__title.classList.add('desappearText')
-    actionZone__title.addEventListener('animationend',() =>{
-        if(player)
-        actionZone__title.textContent = 'YOUR TURN'
-        else
-        actionZone__title.textContent = 'ENEMY TURN'
-        actionZone__title.classList.remove('desappearText')
-        actionZone__title.classList.add('appearText')
-        actionZone__title.addEventListener('animationend',() => {
-            actionZone__title.classList.remove('appearText')
-            actionZone__title.classList.add('desappearText')
-            actionZone__title.addEventListener('animationend',() => {
-                actionZone__title.textContent = text.substring(2).toUpperCase()
-                actionZone__title.classList.remove('desappearText')
-                actionZone__title.classList.add('appearText')
-                actionZone__title.addEventListener('animationend',() =>{
-                    actionZone__title.classList.add('desappearText')
-                    
-                })
-            })
 
-        })
-    })
-    // actionZone__title.classList.toggle('desappearText')
-  
-
-}
 
 
 

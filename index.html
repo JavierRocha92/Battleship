@@ -76,11 +76,14 @@
             <div class="infoZone_fleet">
             </div>
         </aside>
-        <footer class="footer" id="footer">
+        <section class="section__buttons" id="section_butons">
+            <audio class="music__icon hide" id="musicGame" src="./assets/sounds/3 20 Hammer Bros. Battle.mp3"></audio>
             <div class="contianer__icon">
                 <img src="./assets/images/buttons/button_music.png" id="music__icon" alt="" class="icon">
                 <div class="red_bar hide"></div>
             </div>
+            <audio class="sound__icon hide" id="shootWater" src="./assets/sounds/smb_stomp.wav"></audio>
+            <audio class="sound__icon hide" id="shootSound" src="./assets/sounds/mario-bros-firework.mp3"></audio>
             <div class="contianer__icon">
                 <img src="./assets/images/buttons/button_sound.png" id="sound__icon" alt="" class="icon">
                 <div class="red_bar hide"></div>
@@ -89,9 +92,47 @@
                 <img src="./assets/images/buttons/button_vibration.png" id="vibration__icon" alt="" class="icon">
                 <div class="red_bar hide"></div>
             </div>
+        </section>
+        <audio id="gameOver" src="./assets/sounds/smb_gameover.wav"></audio>
+        <audio id="winner" src="./assets/sounds/smb_stage_clear.wav"></audio>
+        <!-- estadistic and final game show -->
+        <footer class="footer" id="footer">
+            <h2 id="footer__title" class="footer__title green">
+                
+            </h2>
+            <h3 class="footer__subtitle">
+                SCORE
+            </h3>
+            <table class="table">
+                <tr class="tr">
+                    <th class="th th__title">CPU</th>
+                    <th class="th th__title"></th>
+                    <th class="th th__title">YOU</th>
+                </tr>
+                <tr class="tr">
+                    <td class="td td_stats td_cpu"></td>
+                    <td class="td">SHOOT</td>
+                    <td class="td td_stats td_player"></td>
+                </tr>
+                <tr class="tr">
+                    <td class="td td_stats td_cpu"></td>
+                    <td class="td">SHOOT ON TARGET</td>
+                    <td class="td td_stats td_player"></td>
+                </tr>
+                <tr class="tr">
+                    <td class="td td_stats td_cpu"></td>
+                    <td class="td">SUNKEN SHIP</td>
+                    <td class="td td_stats td_player"></td>
+                </tr>
+                <tr class="tr">
+                    <td class="td">TIME</td>
+                    <td id="td_time" class="td_time"></td>
+                </tr>
+            </table>
+            <div class="footer__button" id="footer_buton">
+                PLAY AGAIN
+            </div>
         </footer>
-        <audio id="musicGame" src="./assets/sounds/3 20 Hammer Bros. Battle.mp3"></audio>
-        <audio id="shootSound" src="./assets/sounds/mario-bros-firework.mp3"></audio>
     </div>
     <!-- BOOTSTRAP JS FILE -->
     <script src="./js/bootstrap.bundle.min.js"></script>
