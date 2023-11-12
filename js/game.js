@@ -1,4 +1,6 @@
 //VARIABLES
+//global variable to determiante sirection from a ship
+let direction = false
 //global variabel to count the number of limit a ship can has
 let counterLimit = 0
 //global varibale to know if a ship was defeated or not
@@ -28,6 +30,9 @@ let turnPlayer = true
 let firstShootOnTarget = null
 //audio tag with sound of the game action
 const musicGame = document.getElementById('musicGame')
+//button to begin teh game
+const header__button = document.getElementById('header__button')
+const header = document.getElementById('header')
 
 //gloabal vairbales araay to storage letter and numbers corerponding to cell positions
 const letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
@@ -48,6 +53,7 @@ const shoot = (event = false, cellId) => {
                     showTarget(e.id)
                     generateAnimation(e, PlayerShipsMap)
                     turnPlayer = false
+                    e.classList.add('disabled')
                     // e.addEventListener('animationend',machineTurn)
                 }
             }
@@ -196,6 +202,7 @@ const getPosition = (positions) => {
     }
     return position
 }
+
 const checkSorround = (ids) => {
     let cell
     let ball
@@ -208,6 +215,44 @@ const checkSorround = (ids) => {
     }
     return false
 }
+
+//FUNCIONES DE PRUEBA PARA INTENTAR DAR MAS DIFICULTAD A LA LOGICA (MIRAR MAS ADELANTE)*************************
+/**
+ * function to determiante a direction to take based on repeat element from id 
+ * 
+ * @returns string (diredtion to take for sunking ship)
+ */
+// const getDirection = () => {
+//     console.log('miro cual es la direccion')
+//     if(firstShootOnTarget.substring(3,4) == lastShoot.substring(3,4))
+//     return 'vertical'
+//     else
+//     return 'horizoantal'
+// }
+// const getPositionLetter = (positionShip) => {
+//     console.log('este es el item que boy a cambiar '+(positionShip.substring(3,4)))
+//     return letters[indexOf(positionShip.substring(3,4))]
+// }
+// const getPositionNumber = (positionShip) => {
+//     console.log('este es el item que boy a cambiar '+(positionShip.substring(4)))
+//     return positionShip.substring(4)
+// }
+// const getPositionByDirection = (positionItem,number) => {
+// //comprobamos que la posicion es vertical u horizaontal
+//     if(direction == 'vertical'){
+//         if((positionItem + number) < 0 || (positionItem + number) > 9)
+//         return null
+//         else
+//         return letters[(positionItem + number)]
+//     }else{
+//         if((positionItem + number) < 1 || (positionItem + number) > 10)
+//         return null
+//         else
+//         return (positionItem + number)
+//     }
+
+// }
+//FIN FE LAS FINCIONES DE PRUEBA*****************************************************************************
 
 /**
  * function to emulate machine intelligence by calling other function
@@ -256,7 +301,6 @@ const machineTurn = () => {
             } else {
                 do{
                     positionShoot = randomPosition()
-                    console.log('esta es la posicion aleatoria '+positionShoot)
                 }while(!checkSorround(generateSorroundedIds(positionShoot)))
             }
         }
@@ -267,73 +311,32 @@ const machineTurn = () => {
 }
 
 
-
-// const machineTurn = () => {
-//     let positionShoot
-//     //primero genero una posciion aleatoria 
-//     //ahora miro si la ultima vex que tire di a un barco 
-//     if(shootOnTarget){
-//         let cellsSorround = generateSorroundedIds(lastShoot)
-//         //aqui miro si esta inicializada la primero posicion que le dimos a un barco
-//         if(!firstShootOnTarget){
-//             firstShootOnTarget = lastShoot
-//             //si la primera posicion si que existe y la direccion aun no  vamos a determinar cual es la direccion 
-//         }else{
-//             //si la direccion no existe la creo
-//             if(!way){
-//                 way = getWay(lastShoot,firstShootOnTarget)
-//             }
-
-//         }
-//         if(way){
-//             //aqui llamos a edte metodo para que me devulve un id odne tirar la bola, si este es falso pongo el primer limite a false y pruebo cone l otro k¡limite
-//             //si los dos limitees son false doy el barco por hundido y reseteo todos los valores
-//             do{
-//                 positionShoot = generateShootByPosition(lastShoot,way)
-//                 if(counterLimit == 1){
-//                     positionShoot = generateShootByPosition(firstShootOnTarget,way)
-//                 }
-//                 if(!positionShoot){
-//                     counterLimit++
-//                 }
-//             }while(counterLimit < 2 && !positionShoot)
-//             if(counterLimit == 2){
-//                 //si el contador es igual a dos pongo todos los valores como al inicio porque he hundido el barcp
-//                 setValues()
-//             }
-//             //aqui miro si la varibale tiene valor despues de aver pasado por todos los sitios y si no tiene genero un paosicion al azar
-//         }
-//         if(!positionShoot)
-//         positionShoot = getPosition(cellsSorround)
-//         //genero un a rray con las posicion de alrrededro pasandole como parametro la ultima posicion
-
-//     }else{
-//         //aqui entro cuando en la ultimavez no he dado a un barco entonces sigo tirando con el array mediante una posicion aleatoria
-//         if(cellsSorround){
-//             if(cellsSorround.lenght != 0){
-//                 positionShoot = getPosition(cellsSorround)
-//             }
-//         }
-//     }
-//     if(!positionShoot){
-//         positionShoot = randomPosition()
-//     }
-//     shoot(false,positionShoot)
-// }
-
+/**
+ * function  to simulate the game start by showing player turn
+ */
 const startGame = () => {
     // showTarget(false,'START BATTLE')
     showTarget('YOUR TURN')
 
 }
-
+/**
+ * function to manage click over header and show boarda game and play theme
+ */
+const openGame = () => {
+    console.log('pincho en el boton')
+    header__button.classList.add('selected')
+    header.classList.add('hideHeader')
+    document.addEventListener('animationend',()=>{
+        container.classList.remove('hide')
+        container.classList.add('appearContainer')
+        startGame()
+        musicGame.play()
+    })
+}
 // //events
-document.addEventListener('DOMContentLoaded', startGame)
 infoZone__ships.addEventListener('click', shoot)
-document.addEventListener('DOMContentLoaded', () => {
-    musicGame.play()
 
-})
+header__button.addEventListener('click',openGame)
 
 
 

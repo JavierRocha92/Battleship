@@ -1,21 +1,31 @@
 const section_butons = document.getElementById('section_butons')
 const container = document.getElementById('container')
 const footer = document.getElementById('footer')
+//global variable to detect if vibratin efect is or not allowed
+let vibration = false
 /**
  * function to pause audios for specific button
  * 
  * @param {HTMLDivElement} div 
  */
 const disconnect = (div) => {
-    // let sibling = div.previousElementSibling
-    // while(sibling){
-    //     sibling.pause()
-    //     if(sibling.previousElementSibling)
-    //         sibling = sibling.previousElementSibling
-    //     else
-    //     sibling = null
-    // }
-   
+    //conditional to deactivate vibration
+    console.log('este es el id de elemento '+div.id)
+    if(div.id == 'vibration__icon'){
+        if(vibration)
+        vibration = false
+        else
+        vibration = true
+    }else{//condiitonale turn volumen off from audios
+        const audios = document.querySelectorAll('.'+div.id)
+        Array.from(audios).forEach(element => {
+            if(element.volume == 0)
+            element.volume = 1.0
+            else
+            element.volume = 0
+        });
+    
+    }
 }
 /**
  * function to toggle hide classList for e (to put white bar over button form section_butons)
@@ -24,38 +34,48 @@ const disconnect = (div) => {
  */
 const manageBar = (event) => {
     const e = event.target
-    console.log('entro en  la funcion ' + e.className)
-    if (e.className === 'icon') {
+    if (e.className === 'icon' ) {
         const element = e.nextElementSibling
         element.classList.toggle('hide')
         disconnect(e.parentElement)
     }
-    if (e.className === 'red_bar') {
+    if (e.classList.contains('red_bar')) {
         e.classList.toggle('hide')
         disconnect(e.parentElement)
     }
 }
 
 const showStats = () => {
-    console.log('entro en la funcion del footer')
-    console.log('este es el footer cuando entro '+footer.classList)
     footer.classList.add('appearFooter')
-    console.log('este es el footer cuando salgo '+footer.classList)
 }
-
+/**
+ * function to add classList to container for vibration efect
+*/
 const toVibrate = () => {
     container.classList.add('animation__container')
 }
+/**
+ * function to remove classList to container for vibration efect
+ */
 const notVibrate = () => {
     container.classList.remove('animation__container')
 }
+/**
+ * funciton to add style backgorund when pointer is over a selectinable cell
+ * 
+ * @param {event} event 
+ */
 const raiseCell = (event) => {
     const e = event.target
     if(e.classList.contains('cell') && !e.classList.contains('disabled')){
         e.style.backgroundColor = 'white'
-        console.log(e.style)
     }
 }
+/**
+ * funtion to remove backgorund style for a cell when pointer is out from it
+ * 
+ * @param {even} event 
+ */
 const hideCell = (event) => {
     const e = event.target
     if(e.classList.contains('cell'))
@@ -63,10 +83,16 @@ const hideCell = (event) => {
 }
 infoZone__ships.addEventListener('mouseover',raiseCell)
 infoZone__ships.addEventListener('mouseout',hideCell)
-
+/**
+ * function to genrate a animation with the text given as parameter by adding and removing classList to actionZOne__title
+ * 
+ * @param {string} text text to show
+ */
 const showTarget = (text) => {
+    console.log('este es el texto que me llega '+text)
     if(text.indexOf('_') != (-1))
     text = text.substring(2).toUpperCase()
+actionZone__title.textContent = ''
     actionZone__title.classList.toggle('appearText')
     actionZone__title.classList.toggle('desappearText')
     //accion para que aparezca el turno del jugador que toque

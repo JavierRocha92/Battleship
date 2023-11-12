@@ -1,0 +1,44 @@
+@media screen and (min-width:1200px) {
+    .container{
+        grid-template-columns: repeat(6,1fr);
+        grid-template-rows: 0.05fr 1fr;
+        grid-template-areas: 
+        "actionZone__title-container actionZone__title-container actionZone__title-container actionZone__title-container actionZone__title-container section__buttons"
+        "actionZone actionZone actionZone infoZone infoZone infoZone";
+        border: 10px solid black;
+        height: 700px;
+        background-image: url(../assets/images/backgorund_water.gif);
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    .actionZone,.infoZone{
+        position: relative;
+        background-color: transparent;
+        background-image: none;
+        justify-content: center;
+        
+    }
+    .infoZone{
+        border-left: 10px solid black;
+
+    }
+     
+    .actionZone__board{
+        width: 360px;
+        height: 360px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 24px 12px 13px 24px;
+    }
+    .actionZone__ships{
+    }
+    .infoZone__fleet,.actionZone__fleet{
+        position: absolute;
+        top: 20px;
+        display: block;
+        /* border: 2px solid black; */
+    }
+    
+    
+}

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Battleship</title>
     <!-- BOOTSTRAP CSS -->
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <!-- OTHERS CSS -->
@@ -12,18 +12,18 @@
     <link rel="stylesheet" href="./css/normalize.css">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/animation.css">
+    <link rel="stylesheet" href="./css/querys.css">
     <!-- FONT-AWESOME REMOTE LIBRARY -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container" id="container">
-
         <!-- GAME ZONE -->
-        <header class="header">
-            
-        </header>
         <!-- ACTION ZONE -->
         <main class="actionZone">
+            <h2 class="actionZone__fleet">
+                YOUR FLEET
+            </h2>
             <!-- ACTION ZONE CONTAINER-->
             <section class="actionZone__container">
                 <!-- PLAYER BOARD -->
@@ -36,39 +36,42 @@
                 
                         </div>
                         <div class="barco3">
-                
+                            
                         </div>
                         <div class="barco4">
-                
+                            
                         </div> -->
-                    
+                        
                     </div>
                 </div>
                 <!-- TITLE TO SHOW PLAYER TURN, END OR BEGIN GAME -->
             </section>
-            <div class="actionZone__title-container">
-                <h2 class="actionZone__title appearText" id="actionZone__title">
-                    START BATTLE
-                </h2>
-            </div>
         </main>
+        <div class="actionZone__title-container">
+            <h2 class="actionZone__title appearText" id="actionZone__title">
+                START BATTLE
+            </h2>
+        </div>
         <!-- INFO ZONE -->
         <aside class="infoZone">
+            <h2 class="infoZone__fleet">
+                ENEMY FLEET
+            </h2>
             <!-- ENEMY BOARD -->
             <div class="infoZone__board">
                 <div class="infoZone__ships" id="infoZone__ships">
-<!--                     
-                    <div class="barco1">
-            
-                    </div>
-                    <div class="barco2">
+                    <!--                     
+                        <div class="barco1">
+                            
+                        </div>
+                        <div class="barco2">
             
                     </div>
                     <div class="barco3">
-            
+                        
                     </div>
                     <div class="barco4">
-            
+                        
                     </div> -->
                 </div>
             </div>
@@ -78,18 +81,18 @@
         </aside>
         <section class="section__buttons" id="section_butons">
             <audio class="music__icon hide" id="musicGame" src="./assets/sounds/3 20 Hammer Bros. Battle.mp3"></audio>
-            <div class="contianer__icon">
-                <img src="./assets/images/buttons/button_music.png" id="music__icon" alt="" class="icon">
+            <div class="contianer__icon" id="music__icon">
+                <img src="./assets/images/buttons/button_music.png" alt="" class="icon">
                 <div class="red_bar hide"></div>
             </div>
             <audio class="sound__icon hide" id="shootWater" src="./assets/sounds/smb_stomp.wav"></audio>
             <audio class="sound__icon hide" id="shootSound" src="./assets/sounds/mario-bros-firework.mp3"></audio>
-            <div class="contianer__icon">
-                <img src="./assets/images/buttons/button_sound.png" id="sound__icon" alt="" class="icon">
+            <div class="contianer__icon"  id="sound__icon" >
+                <img src="./assets/images/buttons/button_sound.png" alt="" class="icon">
                 <div class="red_bar hide"></div>
             </div>
-            <div class="contianer__icon">
-                <img src="./assets/images/buttons/button_vibration.png" id="vibration__icon" alt="" class="icon">
+            <div class="contianer__icon"  id="vibration__icon" >
+                <img src="./assets/images/buttons/button_vibration.png"alt="" class="icon">
                 <div class="red_bar hide"></div>
             </div>
         </section>
@@ -134,6 +137,17 @@
             </div>
         </footer>
     </div>
+    <!-- START IMAGE TO BEGIN THE GAME -->
+    <header class="header" id="header">
+        <div class="header__image">
+            <img src="./assets/images/backgroundStart.jpg" alt="" class="image">
+        </div>
+        <div class="header__button animation__button" id="header__button">
+            START GAME
+        </div>
+        <div class="spinner-border text-light loading__button hide" id="loading__button" role="status">
+        </div>
+    </header>
     <!-- BOOTSTRAP JS FILE -->
     <script src="./js/bootstrap.bundle.min.js"></script>
     <!-- OTHER JS FILES -->
