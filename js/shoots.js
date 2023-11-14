@@ -80,11 +80,9 @@ const generateAnimation = (cell,map) =>{
         if(cell.id.substring(1,2) === 'p'){
             //let player make his shoot
             turnPlayer = true
-            console.log('entro en la funcion de machine')
             showTarget('YOUR TURN')
             checkScore('machine')
         }else{
-            console.log('entro en la funcion de player')
             showTarget('ENEMY TURN')
             checkScore('player')
             setTimeout(machineTurn,1000)

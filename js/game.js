@@ -9,6 +9,10 @@ let shipIsSunken = false
 let way
 //global variable to check if shoot hit a ship int he last shoot
 let shootOnTarget = false
+//gloabal varibale to check the secodn shoot on a shipsç
+let secondShootOnTarget = false
+//global varibale to detect a limit of a ships
+let shipLimit = false
 //global varibale to storage the last shot
 let lastShoot
 //global varibel to storage cell sorrounded the last shoot on target
@@ -202,7 +206,12 @@ const getPosition = (positions) => {
     }
     return position
 }
-
+/**
+ * function to detect if there is a available position in array ids given as parameter
+ * 
+ * @param {Array} ids array of string id from cells 
+ * @returns true if there is a availble position or flase it is not
+ */
 const checkSorround = (ids) => {
     let cell
     let ball
@@ -215,99 +224,132 @@ const checkSorround = (ids) => {
     }
     return false
 }
-
-//FUNCIONES DE PRUEBA PARA INTENTAR DAR MAS DIFICULTAD A LA LOGICA (MIRAR MAS ADELANTE)*************************
 /**
- * function to determiante a direction to take based on repeat element from id 
+ * fucntion to detect which direction the ship is taking on board
  * 
- * @returns string (diredtion to take for sunking ship)
+ * @returns string (direction which ship take)
  */
-// const getDirection = () => {
-//     console.log('miro cual es la direccion')
-//     if(firstShootOnTarget.substring(3,4) == lastShoot.substring(3,4))
-//     return 'vertical'
-//     else
-//     return 'horizoantal'
-// }
-// const getPositionLetter = (positionShip) => {
-//     console.log('este es el item que boy a cambiar '+(positionShip.substring(3,4)))
-//     return letters[indexOf(positionShip.substring(3,4))]
-// }
-// const getPositionNumber = (positionShip) => {
-//     console.log('este es el item que boy a cambiar '+(positionShip.substring(4)))
-//     return positionShip.substring(4)
-// }
-// const getPositionByDirection = (positionItem,number) => {
-// //comprobamos que la posicion es vertical u horizaontal
-//     if(direction == 'vertical'){
-//         if((positionItem + number) < 0 || (positionItem + number) > 9)
-//         return null
-//         else
-//         return letters[(positionItem + number)]
-//     }else{
-//         if((positionItem + number) < 1 || (positionItem + number) > 10)
-//         return null
-//         else
-//         return (positionItem + number)
-//     }
-
-// }
-//FIN FE LAS FINCIONES DE PRUEBA*****************************************************************************
+const getDirection = () => {
+    if (firstShootOnTarget.substring(0, 3) == lastShoot.substring(0, 3))
+        return 'vertical'
+    else
+        return 'horizontal'
+}
+/**
+ * function to return a cell to shoot depending of the direction the ship is taking
+ * 
+ * @param {string} way direction the ship is taking
+ * @param {Array} cellsArray posibles cell to shot
+ * @returns null or poisiton
+ */
+const getPositionByDirection = (way, cellsArray) => {
+    console.log('esto es lo que vale limite '+shipLimit)
+    console.log('entro para coger por direccion '+way)
+    console.log('estos son los ids '+cellsArray)
+    let item
+    if (way == 'vertical') {
+        if(shipLimit)
+        item = firstShootOnTarget.substring(0, 3)
+        else
+        item = lastShoot.substring(0, 3)
+    } else {
+        if(shipLimit)
+        item = firstShootOnTarget.substring(3)
+        else
+        item = lastShoot.substring(3)
+    }
+    //loop for to find risgth position by way specified
+    console.log('este es el item '+item)
+    for (const cell of cellsArray) {
+        if (way == 'vertical') {
+            if (cell.substring(0, 3) == item)
+                return cell
+        } else {
+            if (cell.substring(3) == item)
+                return cell
+        }
+    }
+    return null
+}
+/**
+ * function to set all values to default when a ship is sunken
+ */
+const setValues = () =>{
+    shipLimit = false
+    firstShootOnTarget = false
+    secondShootOnTarget = null
+    shootOnTarget = false
+    lastShoot = null
+    cellsSorround = []
+    sorrounded = false
+}
 
 /**
- * function to emulate machine intelligence by calling other function
+ * funciton to simulate machine intelligence by calling another functions
  */
-const machineTurn = () => {
-    let positionShoot
-    //conditinal to check if the last shoot hit a ship
-    if (shootOnTarget) {
-        //onditional to check is the first time a ship is hit
-        if (!firstShootOnTarget) {
-            firstShootOnTarget = lastShoot
-        }
-        //set false value to sorrounded
-        sorrounded = false
-        //get ids sorrounding cells 
+const machineTurn = () =>{
+    //genero una posicion aleatoria al entrar 
+    let positionShoot = randomPosition()
+    //pregunto si he pegado a un barco en la ultima tirada
+    if(shootOnTarget){
         cellsSorround = generateSorroundedIds(lastShoot)
-        if (cellsSorround.length == 0) {
-            sorrounded = true
-            positionShoot = randomPosition()
-        } else {
-            //get a random id from array cellsSorround
+        // positionShoot = getPosition(cellsSorround)
+        //si he pegado pregunto si ya habia pegado antes
+        if(!firstShootOnTarget){
+            //si no existe la primera vez la creo 
+            firstShootOnTarget = lastShoot
             positionShoot = getPosition(cellsSorround)
+        }else{
+            //si ya existe pregunto si existe la segunda vez que he dado a un barco
+            if(!secondShootOnTarget){
+                secondShootOnTarget = true
+                direction = getDirection()
+                positionShoot = getPositionByDirection(direction,cellsSorround)
+            }else{
+                positionShoot = getPositionByDirection(direction,cellsSorround)
+            }
         }
-    } else {//                                                              0               1
-        //conditional to check if a cell on a ship is sorrounded by shoot 0 1 0 --> false 1 1 1 --> true
-        //                                                                  0               1
-        if (!sorrounded) {
-            positionShoot = getPosition(cellsSorround)
-        } else {
-            //consitional to check if firstShootOnTarget has value or not
-            if (firstShootOnTarget) {
-                //set false value to sorrounded
-                sorrounded = false
-                //get ids sorrounding cells 
-                cellsSorround = generateSorroundedIds(firstShootOnTarget)
-                //set null value to first posiiton 
-                firstShootOnTarget = null
 
-                if (cellsSorround.length == 0) {
-                    sorrounded = true
-                    positionShoot = randomPosition()
-                } else {
-                    //get a random id from array cellsSorround
-                    positionShoot = getPosition(cellsSorround)
-                }
-            } else {
-                do{
-                    positionShoot = randomPosition()
-                }while(!checkSorround(generateSorroundedIds(positionShoot)))
+    }else{
+        //cuando hemos dado la ultima vez en blanco
+        //preguntamos si estramos y hemos dado ya a un barco, que seria la situacion
+        //de que estamos buscanso la direccion de este
+        if(!firstShootOnTarget){
+            positionShoot = randomPosition()
+        }else{
+            //le pregunto si existe segunda posicionl eso significa que he encontrado un limite
+            if(secondShootOnTarget){
+                shipLimit = true
+                cellsSorround = generateSorroundedIds(firstShootOnTarget)
+                positionShoot = getPositionByDirection(direction,cellsSorround)
+            }else{
+                //aqui entro porue estoy buscansola direecion del barco
+                positionShoot = getPosition(cellsSorround)
+            }
+        }
+
+    }
+    //pregunto si despues de todos los casoso no hay posicion para tirar 
+    if(positionShoot == null){
+        //sabiendo que no hay posicin le pregunto si hemos encontrado un limite
+        if(shipLimit){
+            setValues()
+            //no hay posicion disponible y ya tenemos limmite, quiere decir wue tenemos
+            //los dos limites del barco asique tiro random
+            positionShoot = randomPosition()
+        }else{
+            shipLimit = true
+            cellsSorround = generateSorroundedIds(firstShootOnTarget)
+            positionShoot = getPositionByDirection(direction,cellsSorround)
+            //le pregunto otra vez si es nula porque puede que encuentre los dos limites 
+            //buscando la tirada
+            if(positionShoot == null){
+                positionShoot = randomPosition()
+                setValues()
             }
         }
     }
-    //calling method to genreate a shoot to cell which id matches to parameter
-    shoot(false, positionShoot)
-
+    shoot(false,positionShoot)
 }
 
 
@@ -323,10 +365,9 @@ const startGame = () => {
  * function to manage click over header and show boarda game and play theme
  */
 const openGame = () => {
-    console.log('pincho en el boton')
     header__button.classList.add('selected')
     header.classList.add('hideHeader')
-    document.addEventListener('animationend',()=>{
+    document.addEventListener('animationend', () => {
         container.classList.remove('hide')
         container.classList.add('appearContainer')
         startGame()
@@ -336,7 +377,7 @@ const openGame = () => {
 // //events
 infoZone__ships.addEventListener('click', shoot)
 
-header__button.addEventListener('click',openGame)
+header__button.addEventListener('click', openGame)
 
 
 

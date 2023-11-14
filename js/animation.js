@@ -89,7 +89,6 @@ infoZone__ships.addEventListener('mouseout',hideCell)
  * @param {string} text text to show
  */
 const showTarget = (text) => {
-    console.log('este es el texto que me llega '+text)
     if(text.indexOf('_') != (-1))
     text = text.substring(2).toUpperCase()
 actionZone__title.textContent = ''

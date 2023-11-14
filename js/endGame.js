@@ -40,7 +40,6 @@ function getTime(miliseconds) {
 const fillTable = () => {
     let count = 0
     for (const key in stats) {
-        // console.log(key)
         Array.from(stats__game)[count].textContent = stats[key]
         count++
     }
@@ -67,7 +66,6 @@ const fillStats = (winner) => {
  * function to show ships position when the game ends
  */
 const showShipsCells = () => {
-    console.log('entro en la funcion con '+infoZone__ships.children)
     
     for (let i = 0; i < Array.from(infoZone__ships.children).length; i++) {
         const element = Array.from(infoZone__ships.children)[i]
