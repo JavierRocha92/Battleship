@@ -4,6 +4,11 @@ La idea de la carga de elementos de la aplicación se basa en crear celdas para 
 
 LOGICA
 
-Para la lógica, hemos optado por generar un disparo aleatorio hasta que se encuentre un barco. Cuando se encuentre uno, vamos a generar un array de posiciones válidas alrededor de este y vamos a agotar esas posibilidades hasta que se encuentre otra posición de barco. El array se volverá a regenerar siempre que se encuentre una posición nueva. Cuando ya no haya posiciones, se volverá a la primera posición del barco para ir en la otra dirección y se agotarán todas las posibilidades del array cuando se llegue al final. Cuando este array de la otra dirección se acabe sin encontrar nueva posición de barco, se generará una posición aleatoria en busca de un barco nuevo.
+Para la lógica, hemos optado por generar un disparo aleatorio hasta que se encuentre un barco. Cuando se encuentre uno, vamos a generar un array de posiciones válidas alrededor de este y vamos a agotar esas posibilidades hasta que se encuentre otra posición de barco. El array se volverá a regenerar siempre que se encuentre una posición nueva. 
+Preguntaremos si es la segunda vez que se golpea al barco para asi saber en que direcion se encuentra posicionado, en este caso seguiremos generando un array de todas las posiciones, pero el metodo de escoger la posicion del array ya no sera aleatorio si no que preguntando por la direccion escogeremos aquella que coincida el numero o la letra dependiendo de esta.
+se tirara en esa direccion hasta encontrar un limite y se volvera a tirar de las misma manera pero esta vez alrredor de la primera posicion y se repetira el proceso hasta encontrar el otro limite.
+Cuando los dos limites hayan sido encontrados, pondremos todos los valores por defecto y tiraremos random en busca de un nuevo barco
 
-POSD: Sé que la lógica implica que, una vez que se encuentre un barco, se detecte una dirección y se vaya en busca de uno nuevo cuando los dos límites de las direcciones se hayan encontrado. Sin embargo, observé que muchas veces salen barcos pegados unos a otros y esta razón hace que la máquina sea más rápida en derribar los barcos para hacer el juego más difícil y entretenido.
+
+FINAL DE JUEGO
+Cuando uno de los dos jugadores llegue e 17 disparos en barcos, eso significara que ha hundido todos los barcos del rival y se generar una carga de estadisticas y la aparicion de estas, parando la ejecucion del juego y brindando la oporthnidad de poder jugar otra partida cargando todo el programa otra vez desde cero

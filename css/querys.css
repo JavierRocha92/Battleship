@@ -1,4 +1,7 @@
 @media screen and (min-width:1200px) {
+    .image_h{
+        transform: translateY(-400px);
+    }
     .container{
         grid-template-columns: repeat(6,1fr);
         grid-template-rows: 0.05fr 1fr;
@@ -6,10 +9,10 @@
         "actionZone__title-container actionZone__title-container actionZone__title-container actionZone__title-container actionZone__title-container section__buttons"
         "actionZone actionZone actionZone infoZone infoZone infoZone";
         border: 10px solid black;
-        height: 700px;
         background-image: url(../assets/images/backgorund_water.gif);
         background-repeat: no-repeat;
         background-size: cover;
+        height: 100vh;
     }
     .actionZone,.infoZone{
         position: relative;

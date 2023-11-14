@@ -243,9 +243,6 @@ const getDirection = () => {
  * @returns null or poisiton
  */
 const getPositionByDirection = (way, cellsArray) => {
-    console.log('esto es lo que vale limite '+shipLimit)
-    console.log('entro para coger por direccion '+way)
-    console.log('estos son los ids '+cellsArray)
     let item
     if (way == 'vertical') {
         if(shipLimit)
@@ -259,7 +256,6 @@ const getPositionByDirection = (way, cellsArray) => {
         item = lastShoot.substring(3)
     }
     //loop for to find risgth position by way specified
-    console.log('este es el item '+item)
     for (const cell of cellsArray) {
         if (way == 'vertical') {
             if (cell.substring(0, 3) == item)
@@ -283,7 +279,6 @@ const setValues = () =>{
     cellsSorround = []
     sorrounded = false
 }
-
 /**
  * funciton to simulate machine intelligence by calling another functions
  */

@@ -91,7 +91,7 @@ infoZone__ships.addEventListener('mouseout',hideCell)
 const showTarget = (text) => {
     if(text.indexOf('_') != (-1))
     text = text.substring(2).toUpperCase()
-actionZone__title.textContent = ''
+    actionZone__title.textContent = ''
     actionZone__title.classList.toggle('appearText')
     actionZone__title.classList.toggle('desappearText')
     //accion para que aparezca el turno del jugador que toque
